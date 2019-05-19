@@ -1,0 +1,36 @@
+version: "2.1"
+services:
+    postgres: 
+        image: clkao/postgres-plv8
+        container_name: postgres
+        hostname: postgres
+        environment:
+            - variables.env
+        ports:
+            - "5432:5432"
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - wine_network
+        healthcheck:
+          test: "pg_isready -U postgres"
+          interval: 10s
+          timeout: 5s
+          retries: 5
+    web: 
+        build:
+            dockerfile: Dockerfile
+            context: .
+        container_name: web
+        ports:
+            - "80:80"
+        depends_on:
+          postgres:
+            condition: service_healthy
+        networks:
+            - wine_network
+networks:
+  wine_network:
+     driver: bridge
+volumes:
+    db-data:
