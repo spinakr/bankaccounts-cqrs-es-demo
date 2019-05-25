@@ -1,34 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BankAccounts.Domain.Queries;
 using BankAccounts.Messaging;
 using Microsoft.AspNetCore.Mvc;
 
-namespace bankaccounts.Controllers
+namespace BankAccounts.Controllers
 {
-	[Route("api/customers/")]
-	public class AccountsController : Controller
-	{
-		private IMessaging _messaging;
+    [Route("api/customers/")]
+    public class AccountsController : Controller
+    {
+        private readonly IMessaging _messaging;
 
-		public AccountsController(IMessaging messaging)
-		{
-			_messaging = messaging;
+        public AccountsController(IMessaging messaging)
+        {
+            _messaging = messaging;
 
-		}
+        }
 
-		[HttpGet("{customerId}/accounts")]
-		public IEnumerable<AccountOverview> AccountsOverview(string customerId)
-		{
-			return _messaging.Dispatch(new AccountsOverviewQuery(customerId));
-		}
+        [HttpGet("{customerId}/accounts")]
+        public IEnumerable<AccountOverview> AccountsOverview(string customerId)
+        {
+            return _messaging.Dispatch(new AccountsOverviewQuery(customerId));
 
-		[HttpPost]
-		public IActionResult CreateAccount(Guid customerId, string name)
-		{
-			return Ok();
-		}
-	}
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(Guid customerId, string name)
+        {
+            return Ok();
+        }
+    }
 }
