@@ -1,4 +1,5 @@
-using BankAccounts.Utils;
+using BankAccounts.Domain.Queries;
+using BankAccounts.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +30,7 @@ namespace bankaccounts
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddHandlers();
+            services.AddHandlers(typeof(AccountsOverviewQueryHandler).Assembly);
             services.AddSingleton<IMessaging, Messaging>();
         }
 

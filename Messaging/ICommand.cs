@@ -1,4 +1,4 @@
-namespace BankAccounts.Utils
+namespace BankAccounts.Messaging
 {
     public interface ICommand
     {

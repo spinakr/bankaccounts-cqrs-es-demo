@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BankAccounts.Utils
+namespace BankAccounts.Messaging
 {
     public interface IMessaging
     {

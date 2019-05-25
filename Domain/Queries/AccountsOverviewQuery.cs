@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using BankAccounts.Utils;
+using BankAccounts.Messaging;
 
-namespace BankAccounts.Queries
+namespace BankAccounts.Domain.Queries
 {
     public class AccountOverview
     {

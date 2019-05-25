@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BankAccounts.Utils
+namespace BankAccounts.Messaging
 {
     public abstract class EventSourcedAggregate
     {

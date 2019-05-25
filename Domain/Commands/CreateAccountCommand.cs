@@ -1,7 +1,7 @@
 using System;
-using BankAccounts.Utils;
+using BankAccounts.Messaging;
 
-namespace BankAccounts.Queries
+namespace BankAccounts.Domain.Queries
 {
     public class CreateAccountCommand : ICommand
     {
