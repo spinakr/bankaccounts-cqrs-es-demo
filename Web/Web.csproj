@@ -8,6 +8,7 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <RootNamespace>BankAccounts.Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

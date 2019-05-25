@@ -1,0 +1,19 @@
+POST https://localhost:5001/api/accounts
+content-type: application/json
+
+{
+  "vinmonopoletId": "3833001",
+  "name": "Luisin Barolo Leon 2010",
+  "fruit": "Nebbiolo 100%",
+  "vintage": "2010",
+  "price": 429,
+  "country": "Piemonte",
+  "productType": "Rødvin",
+  "producer": "Moswines AS"
+}
+
+
+
+###
+GET https://localhost:5001/api/customers/123/accounts
+
