@@ -17,17 +17,25 @@ namespace BankAccounts.Controllers
 
         }
 
+        [HttpGet("{customerId}/accounts/{accountId}")]
+        public AccountOverview AccountOverview(Guid customerId, Guid accountId)
+        {
+            return _messaging.Dispatch(new AccountQuery(accountId));
+        }
+
         [HttpGet("{customerId}/accounts")]
-        public IEnumerable<AccountOverview> AccountsOverview(string customerId)
+        public IEnumerable<AccountOverview> CustomerAccountsOverview(string customerId)
         {
             return _messaging.Dispatch(new AccountsOverviewQuery(customerId));
 
         }
 
-        [HttpPost]
-        public IActionResult CreateAccount(Guid customerId, string name)
+        [HttpPost("{customerId}/accounts")]
+        public IActionResult CreateAccount(Guid customerId, [FromBody]dynamic req)
         {
-            return Ok();
+            var result = _messaging.Dispatch(new CreateAccountCommand(customerId, (string)req.name));
+
+            return Ok(result.AggregateId);
         }
     }
 }

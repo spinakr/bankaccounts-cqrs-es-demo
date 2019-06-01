@@ -4,6 +4,9 @@
     <ProjectReference Include="..\Messaging\Messaging.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>BankAccounts.Domain</RootNamespace>
