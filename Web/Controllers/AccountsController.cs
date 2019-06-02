@@ -37,5 +37,13 @@ namespace BankAccounts.Controllers
 
             return Ok(result.AggregateId);
         }
+
+        [HttpPost("{customerId}/accounts/transfer")]
+        public IActionResult TransferTo(Guid customerId, [FromBody]dynamic req)
+        {
+            var result = _messaging.Dispatch(new MakeTransferCommand((Guid)req.FromAccountId, (Guid)req.ToAccountId, (double)req.Amount));
+
+            return Ok();
+        }
     }
 }

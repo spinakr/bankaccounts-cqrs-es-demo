@@ -7,15 +7,15 @@ namespace BankAccounts.Messaging
     {
         public Guid Id { get; set; }
 
-        protected EventSourcedAggregate(IEnumerable<Event> events)
+        public List<Event> PendingEvents { get; private set; }
+
+        protected EventSourcedAggregate(IEnumerable<Event> events) : this()
         {
             foreach (var @event in events)
             {
                 Mutate(@event);
             }
         }
-
-        public List<Event> PendingEvents { get; private set; }
 
         protected EventSourcedAggregate()
         {

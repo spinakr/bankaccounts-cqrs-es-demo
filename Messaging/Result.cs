@@ -15,6 +15,7 @@ namespace BankAccounts.Messaging
         public string ErrorMessage { get; }
         public Guid? AggregateId { get; set; }
 
+        public static Result Success() => new Result(true, null);
         public static Result Success(Guid aggregateId) => new Result(true, aggregateId);
         public static Result Error(Guid aggregateId, string errorMessage) => new Result(false, aggregateId, errorMessage);
     }

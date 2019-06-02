@@ -23,6 +23,18 @@ namespace BankAccounts.Domain.Model
             return newAccount;
         }
 
+        public void DepositAmount(Guid fromAccount, double amount)
+        {
+            var @event = new DepositRecorded(Id, fromAccount, amount, DateTime.Now);
+            Append(@event);
+        }
+
+        public void WithdrawAmount(Guid toAccount, double amount)
+        {
+            var @event = new WitdrawalRecorded(toAccount, Id, amount, DateTime.Now);
+            Append(@event);
+        }
+
         public void When(AccountCreated @event)
         {
             Id = @event.AccountId;

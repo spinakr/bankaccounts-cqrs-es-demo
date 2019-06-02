@@ -2,7 +2,7 @@ POST https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/a
 content-type: application/json
 
 {
-  "name": "Brukskonto"
+  "name": "Lønnskonto"
 }
 
 
@@ -12,4 +12,14 @@ GET https://localhost:5001/api/customers/123/accounts
 
 
 ###
-GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/8cafc450-194a-42bd-87bb-a87dbe016bf0
+GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/004ae2a0-16c9-4db0-81f6-3aaabba4fe05
+
+###
+POST https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/transfer
+content-type: application/json
+
+{
+  "FromAccountId": "004ae2a0-16c9-4db0-81f6-3aaabba4fe05",
+  "FromAccount": "3e41e920-d74b-42e7-b620-94f906aa8856",
+  "Amount": "100",
+}
