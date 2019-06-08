@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BankAccounts.Messaging
+namespace BankAccounts.CQRS
 {
     public static class HandlerRegistration
     {

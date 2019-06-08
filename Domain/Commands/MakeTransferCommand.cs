@@ -1,6 +1,7 @@
 using System;
 using BankAccounts.Domain.Model;
-using BankAccounts.Messaging;
+using BankAccounts.CQRS;
+using BankAccounts.CQRS.EventStore;
 
 namespace BankAccounts.Domain.Queries
 {
@@ -29,14 +30,16 @@ namespace BankAccounts.Domain.Queries
 
         public Result Handle(MakeTransferCommand cmd)
         {
-            var fromAccount = new Account(_eventStore.LoadEventStream(cmd.FromAccount.ToString()));
-            var toAccount = new Account(_eventStore.LoadEventStream(cmd.ToAccount.ToString()));
+            var fromAccountStream = _eventStore.LoadEventStream(cmd.FromAccount.ToString());
+            var fromAccount = new Account(fromAccountStream.Events);
+            var toAccountStream = _eventStore.LoadEventStream(cmd.ToAccount.ToString());
+            var toAccount = new Account(toAccountStream.Events);
 
             fromAccount.WithdrawAmount(toAccount.Id, cmd.Amount);
             toAccount.DepositAmount(fromAccount.Id, cmd.Amount);
 
-            _eventStore.AppendToStream(fromAccount.Id.ToString(), fromAccount.PendingEvents);
-            _eventStore.AppendToStream(toAccount.Id.ToString(), toAccount.PendingEvents);
+            _eventStore.AppendToStream(fromAccount.Id.ToString(), fromAccount.PendingEvents, fromAccountStream.Version);
+            _eventStore.AppendToStream(toAccount.Id.ToString(), toAccount.PendingEvents, toAccountStream.Version);
 
             return Result.Success();
         }

@@ -1,4 +1,4 @@
-namespace BankAccounts.Messaging
+namespace BankAccounts.CQRS
 {
     public interface IQuery<TResult>
     {

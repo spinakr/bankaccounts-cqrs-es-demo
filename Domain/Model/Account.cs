@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BankAccounts.Domain.Events;
-using BankAccounts.Messaging;
+using BankAccounts.CQRS;
+using BankAccounts.CQRS.EventStore;
 
 namespace BankAccounts.Domain.Model
 {

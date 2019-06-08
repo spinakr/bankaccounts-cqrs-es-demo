@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using BankAccounts.Domain.Model;
-using BankAccounts.Messaging;
+using BankAccounts.CQRS;
+using BankAccounts.CQRS.EventStore;
 
 namespace BankAccounts.Domain.Queries
 {
-    public class AccountOverview
-    {
-        public string AccountName { get; set; }
-        public double Balance { get; set; }
-    }
 
     public class AccountQuery : IQuery<AccountOverview>
     {
@@ -32,8 +28,8 @@ namespace BankAccounts.Domain.Queries
 
         public AccountOverview Handle(AccountQuery query)
         {
-            var events = _eventStore.LoadEventStream(query.AccountId.ToString());
-            var account = new Account(events);
+            var eventStream = _eventStore.LoadEventStream(query.AccountId.ToString());
+            var account = new Account(eventStream.Events);
 
             return new AccountOverview
             {

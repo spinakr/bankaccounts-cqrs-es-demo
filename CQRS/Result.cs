@@ -1,6 +1,6 @@
 using System;
 
-namespace BankAccounts.Messaging
+namespace BankAccounts.CQRS
 {
     public class Result
     {

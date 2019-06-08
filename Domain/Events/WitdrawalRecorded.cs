@@ -1,5 +1,6 @@
 using System;
-using BankAccounts.Messaging;
+using BankAccounts.CQRS;
+using BankAccounts.CQRS.EventStore;
 using Domain.Model;
 
 namespace BankAccounts.Domain.Events

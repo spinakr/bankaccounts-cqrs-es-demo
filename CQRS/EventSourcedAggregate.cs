@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using BankAccounts.CQRS.EventStore;
 
-namespace BankAccounts.Messaging
+namespace BankAccounts.CQRS
 {
     public abstract class EventSourcedAggregate
     {

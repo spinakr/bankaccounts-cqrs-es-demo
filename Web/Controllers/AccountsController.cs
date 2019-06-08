@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BankAccounts.CQRS;
 using BankAccounts.Domain.Queries;
-using BankAccounts.Messaging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAccounts.Controllers

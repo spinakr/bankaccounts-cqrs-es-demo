@@ -1,6 +1,7 @@
 using System;
 using BankAccounts.Domain.Model;
-using BankAccounts.Messaging;
+using BankAccounts.CQRS;
+using BankAccounts.CQRS.EventStore;
 
 namespace BankAccounts.Domain.Queries
 {
@@ -28,7 +29,7 @@ namespace BankAccounts.Domain.Queries
         public Result Handle(CreateAccountCommand cmd)
         {
             var newAccount = Account.CreateNew(cmd.Name, cmd.CustomerId);
-            _eventStore.AppendToStream(newAccount.Id.ToString(), newAccount.PendingEvents);
+            _eventStore.AppendToStream(newAccount.Id.ToString(), newAccount.PendingEvents, 0);
             return Result.Success(newAccount.Id);
         }
     }

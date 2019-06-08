@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace BankAccounts.Messaging
+namespace BankAccounts.CQRS.EventStore
 {
     public class EventStream
     {
         public int Version { get; set; }
-        public IList<Event> Events = new List<Event>();
+        public List<Event> Events = new List<Event>();
     }
 }
