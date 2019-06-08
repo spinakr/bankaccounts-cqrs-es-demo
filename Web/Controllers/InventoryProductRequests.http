@@ -8,7 +8,7 @@ content-type: application/json
 
 
 ###
-GET https://localhost:5001/api/customers/123/accounts
+GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts
 
 
 ###

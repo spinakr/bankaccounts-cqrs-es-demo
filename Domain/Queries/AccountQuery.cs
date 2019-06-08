@@ -34,7 +34,8 @@ namespace BankAccounts.Domain.Queries
             return new AccountOverview
             {
                 AccountName = account.Name,
-                Balance = account.Balance
+                Balance = account.Balance,
+                AccountId = account.Id.ToString()
             };
         }
     }

@@ -1,5 +1,7 @@
+using System;
 using BankAccounts.CQRS;
 using BankAccounts.CQRS.EventStore;
+using BankAccounts.CQRS.Projections;
 using BankAccounts.Domain.Queries;
 using CQRS.EventStore;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +38,7 @@ namespace bankaccounts
             services.AddSingleton<IMessaging, Messaging>();
             services.AddSingleton<IEventStore, EventStore>();
             services.AddSingleton<IAppendOnlyStore, InMemoryAppendOnlyStore>();
+            services.AddSingleton<IProjectionStore<Guid, AccountsOverview>, InMemoryProjectionStore<Guid, AccountsOverview>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

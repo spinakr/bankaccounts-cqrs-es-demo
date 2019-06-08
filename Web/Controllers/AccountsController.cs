@@ -24,7 +24,7 @@ namespace BankAccounts.Controllers
         }
 
         [HttpGet("{customerId}/accounts")]
-        public IEnumerable<AccountOverview> CustomerAccountsOverview(string customerId)
+        public AccountsOverview CustomerAccountsOverview(string customerId)
         {
             return _messaging.Dispatch(new AccountsOverviewQuery(customerId));
 

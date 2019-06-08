@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using BankAccounts.CQRS;
 using BankAccounts.CQRS.EventStore;
+using BankAccounts.CQRS.Projections;
 
 namespace BankAccounts.Domain.Queries
 {
-    public class AccountsOverviewQuery : IQuery<IEnumerable<AccountOverview>>
+    public class AccountsOverviewQuery : IQuery<AccountsOverview>
     {
         public string CustomerId { get; set; }
 
@@ -14,21 +16,21 @@ namespace BankAccounts.Domain.Queries
         }
     }
 
-    public class AccountsOverviewQueryHandler : IQueryHandler<AccountsOverviewQuery, IEnumerable<AccountOverview>>
+    public class AccountsOverviewQueryHandler : IQueryHandler<AccountsOverviewQuery, AccountsOverview>
     {
-        public AccountsOverviewQueryHandler(IEventStore eventStore)
+        private IProjectionStore<Guid, AccountsOverview> _projectionStore;
+
+        public AccountsOverviewQueryHandler(IProjectionStore<Guid, AccountsOverview> projectionStore)
         {
-            _eventStore = eventStore;
+            _projectionStore = projectionStore;
         }
 
         private IEventStore _eventStore { get; }
 
-        public IEnumerable<AccountOverview> Handle(AccountsOverviewQuery query)
+        public AccountsOverview Handle(AccountsOverviewQuery query)
         {
-            return new List<AccountOverview>
-            {
-
-            };
+            var projection = _projectionStore.GetProjection(Guid.Parse(query.CustomerId));
+            return projection;
         }
     }
 }

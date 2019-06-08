@@ -12,6 +12,7 @@ namespace BankAccounts.Domain.Events
             StreamName = fromAccount.ToString();
             Transfer = new Transfer(fromAccount, toAccount, amount, date);
         }
+
         public Transfer Transfer { get; set; }
     }
 }

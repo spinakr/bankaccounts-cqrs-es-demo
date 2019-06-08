@@ -8,17 +8,23 @@ namespace BankAccounts.CQRS.EventStore
 {
     public class EventStore : IEventStore
     {
-        public EventStore(IAppendOnlyStore appendOnlyStore)
+        public EventStore(IAppendOnlyStore appendOnlyStore, IMessaging messaging)
         {
             _appendOnlyStore = appendOnlyStore;
+            _messaging = messaging;
         }
 
         private IAppendOnlyStore _appendOnlyStore;
+        private IMessaging _messaging;
 
         public void AppendToStream(string streamName, ICollection<Event> events, int originalVersion)
         {
             var data = JsonConvert.SerializeObject(events, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             _appendOnlyStore.Append(streamName, data, originalVersion);
+            foreach (var @event in events)
+            {
+                _messaging.Publish(@event);
+            }
         }
 
         public EventStream LoadEventStream(string streamName)
