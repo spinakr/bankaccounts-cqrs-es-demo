@@ -17,7 +17,7 @@ namespace BankAccounts.CQRS.EventStore
 
         public void AppendToStream(string streamName, ICollection<Event> events, int originalVersion)
         {
-            var data = JsonConvert.SerializeObject(events);
+            var data = JsonConvert.SerializeObject(events, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             _appendOnlyStore.Append(streamName, data, originalVersion);
         }
 
@@ -27,7 +27,7 @@ namespace BankAccounts.CQRS.EventStore
             var stream = new EventStream();
             foreach (var record in records)
             {
-                stream.Events.AddRange(JsonConvert.DeserializeObject<ICollection<Event>>(record.JsonData));
+                stream.Events.AddRange(JsonConvert.DeserializeObject<ICollection<Event>>(record.JsonData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
                 stream.Version = record.Version;
             }
             return stream;

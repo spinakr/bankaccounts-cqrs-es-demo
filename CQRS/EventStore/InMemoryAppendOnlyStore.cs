@@ -11,7 +11,8 @@ namespace CQRS.EventStore
 
         public void Append(string name, string jsonData, int expectedVersion)
         {
-            var version = _store.Where(x => x.StreamName == name).Max(x => x.Version);
+            var stream = _store.Where(x => x.StreamName == name);
+            var version = stream.Any() ? stream.Max(x => x.Version) : 0;
             if (version != expectedVersion) throw new Exception();
             _store.Add(new StorageRecord { StreamName = name, JsonData = jsonData, Version = expectedVersion + 1 });
         }
