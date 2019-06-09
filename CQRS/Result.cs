@@ -4,19 +4,30 @@ namespace BankAccounts.CQRS
 {
     public class Result
     {
-        private Result(bool success, Guid? aggregateId, string errorMessage = null)
+        protected Result(bool success, string errorMessage)
         {
-            IsSuccess = success;
+            if (success && errorMessage != null) throw new ArgumentException("Result cannot be successful and have an errormessage");
+            if (!success && errorMessage == null) throw new ArgumentException("Result cannot be failure and not have an errormessage");
+            Success = success;
             ErrorMessage = errorMessage;
-            AggregateId = aggregateId;
         }
 
-        public bool IsSuccess { get; }
+        public bool Success { get; }
         public string ErrorMessage { get; }
-        public Guid? AggregateId { get; set; }
+        public bool Failure => !Success;
 
-        public static Result Success() => new Result(true, null);
-        public static Result Success(Guid aggregateId) => new Result(true, aggregateId);
-        public static Result Error(Guid aggregateId, string errorMessage) => new Result(false, aggregateId, errorMessage);
+        public static Result Fail(string message) => new Result(false, message);
+        public static Result<T> Complete<T>(T value) => new Result<T>(true, value);
+        public static Result Complete() => new Result(true, null);
+    }
+
+    public class Result<T> : Result
+    {
+        public T Value { get; set; }
+
+        protected internal Result(bool success, T value) : base(success, null)
+        {
+            Value = value;
+        }
     }
 }

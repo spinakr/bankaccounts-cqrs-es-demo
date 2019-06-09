@@ -30,7 +30,7 @@ namespace BankAccounts.Domain.Queries
         {
             var newAccount = Account.CreateNew(cmd.Name, cmd.CustomerId);
             _eventStore.AppendToStream(newAccount.Id.ToString(), newAccount.PendingEvents, 0);
-            return Result.Success(newAccount.Id);
+            return Result.Complete(newAccount.Id);
         }
     }
 }

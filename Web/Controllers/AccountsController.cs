@@ -35,7 +35,7 @@ namespace BankAccounts.Controllers
         {
             var result = _messaging.Dispatch(new CreateAccountCommand(customerId, (string)req.name));
 
-            return Ok(result.AggregateId);
+            return Ok(((Result<Guid>)result).Value);
         }
 
         [HttpPost("{customerId}/accounts/transfer")]

@@ -41,7 +41,7 @@ namespace BankAccounts.Domain.Queries
             _eventStore.AppendToStream(fromAccount.Id.ToString(), fromAccount.PendingEvents, fromAccountStream.Version);
             _eventStore.AppendToStream(toAccount.Id.ToString(), toAccount.PendingEvents, toAccountStream.Version);
 
-            return Result.Success();
+            return Result.Complete();
         }
     }
 }
