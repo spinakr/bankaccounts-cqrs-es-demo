@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BankAccounts.CQRS.EventStore;
+using CQRS;
 
 namespace BankAccounts.CQRS
 {
@@ -8,9 +9,9 @@ namespace BankAccounts.CQRS
     {
         public Guid Id { get; set; }
 
-        public List<Event> PendingEvents { get; private set; }
+        public List<IEvent> PendingEvents { get; private set; }
 
-        protected EventSourcedAggregate(IEnumerable<Event> events) : this()
+        protected EventSourcedAggregate(IEnumerable<IEvent> events) : this()
         {
             foreach (var @event in events)
             {
@@ -20,16 +21,16 @@ namespace BankAccounts.CQRS
 
         protected EventSourcedAggregate()
         {
-            PendingEvents = new List<Event>();
+            PendingEvents = new List<IEvent>();
         }
 
-        protected void Append(Event @event)
+        protected void Append(IEvent @event)
         {
             PendingEvents.Add(@event);
             Mutate(@event);
         }
 
-        private void Mutate(Event @event)
+        private void Mutate(IEvent @event)
         {
             //Exexute correct method on the aggregate
             ((dynamic)this).When((dynamic)@event);

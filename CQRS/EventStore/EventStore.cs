@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CQRS;
 using Newtonsoft.Json;
 
 namespace BankAccounts.CQRS.EventStore
@@ -17,7 +18,7 @@ namespace BankAccounts.CQRS.EventStore
         private IAppendOnlyStore _appendOnlyStore;
         private IMessaging _messaging;
 
-        public void AppendToStream(string streamName, ICollection<Event> events, int originalVersion)
+        public void AppendToStream(string streamName, ICollection<IEvent> events, int originalVersion)
         {
             var data = JsonConvert.SerializeObject(events, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             _appendOnlyStore.Append(streamName, data, originalVersion);
@@ -33,7 +34,7 @@ namespace BankAccounts.CQRS.EventStore
             var stream = new EventStream();
             foreach (var record in records)
             {
-                stream.Events.AddRange(JsonConvert.DeserializeObject<ICollection<Event>>(record.JsonData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
+                stream.Events.AddRange(JsonConvert.DeserializeObject<ICollection<IEvent>>(record.JsonData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
                 stream.Version = record.Version;
             }
             return stream;

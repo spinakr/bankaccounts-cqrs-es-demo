@@ -37,7 +37,7 @@ namespace bankaccounts
             services.AddHandlers(typeof(AccountsOverviewQueryHandler).Assembly);
             services.AddSingleton<IMessaging, Messaging>();
             services.AddSingleton<IEventStore, EventStore>();
-            services.AddSingleton<IAppendOnlyStore, InMemoryAppendOnlyStore>();
+            services.AddSingleton<IAppendOnlyStore, FileAppendOnlyStore>();
             services.AddSingleton<IProjectionStore<Guid, AccountsOverview>, InMemoryProjectionStore<Guid, AccountsOverview>>();
         }
 

@@ -1,15 +1,15 @@
 using System;
 using BankAccounts.CQRS;
 using BankAccounts.CQRS.EventStore;
+using CQRS;
 using Domain.Model;
 
 namespace BankAccounts.Domain.Events
 {
-    public class WitdrawalRecorded : Event
+    public class WitdrawalRecorded : IEvent
     {
         public WitdrawalRecorded(Guid toAccount, Guid fromAccount, double amount, DateTime date)
         {
-            StreamName = fromAccount.ToString();
             Transfer = new Transfer(fromAccount, toAccount, amount, date);
         }
 

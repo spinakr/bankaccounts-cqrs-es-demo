@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BankAccounts.Domain.Events;
 using BankAccounts.CQRS;
 using BankAccounts.CQRS.EventStore;
+using CQRS;
 
 namespace BankAccounts.Domain.Model
 {
@@ -10,7 +11,7 @@ namespace BankAccounts.Domain.Model
     {
         public Account() { }
 
-        public Account(IEnumerable<Event> events) : base(events) { }
+        public Account(IEnumerable<IEvent> events) : base(events) { }
 
         public Guid CustomerId { get; set; }
         public string Name { get; set; }

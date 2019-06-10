@@ -1,15 +1,15 @@
 using System;
 using BankAccounts.CQRS;
 using BankAccounts.CQRS.EventStore;
+using CQRS;
 
 namespace BankAccounts.Domain.Events
 {
-    public class AccountCreated : Event
+    public class AccountCreated : IEvent
     {
 
         public AccountCreated(Guid accountId, string accountName, Guid customerId)
         {
-            this.StreamName = accountId.ToString();
             this.CustomerId = customerId;
             this.AccountId = accountId;
             this.AccountName = accountName;
