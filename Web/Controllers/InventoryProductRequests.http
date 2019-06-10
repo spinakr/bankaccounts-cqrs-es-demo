@@ -12,14 +12,14 @@ GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/ac
 
 
 ###
-GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/15526fee-196f-4806-ba3e-06336ad0a69b
+GET https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/e7bb701a-e8d1-40a6-97dc-cff805b2e03c
 
 ###
 POST https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/accounts/transfer
 content-type: application/json
 
 {
-  "FromAccountId": "15526fee-196f-4806-ba3e-06336ad0a69b",
-  "ToAccountId": "9c19a465-bfbd-47f0-a93d-00348dd8a79b",
+  "FromAccountId": "292bec83-4e74-42dd-86fa-03982ea3e8d5",
+  "ToAccountId": "e7bb701a-e8d1-40a6-97dc-cff805b2e03c",
   "Amount": "100",
 }
