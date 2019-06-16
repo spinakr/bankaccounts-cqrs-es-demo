@@ -18,8 +18,8 @@ namespace BankAccounts.CQRS
 
             foreach (Type type in handlerTypes)
             {
-                Type interfaceType = type.GetInterfaces().Single(y => IsHandlerInterface(y));
-                services.AddTransient(interfaceType, type);
+                List<Type> interfaceTypes = type.GetInterfaces().Where(y => IsHandlerInterface(y)).ToList();
+                interfaceTypes.Select(t => services.AddTransient(t, type)).ToList();
             }
         }
 

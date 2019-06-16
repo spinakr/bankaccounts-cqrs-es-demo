@@ -7,7 +7,7 @@ using CQRS;
 
 namespace Domain.Projections
 {
-    public class AccountsOverviewProjection : IEventHandler<AccountCreated>
+    public class AccountsOverviewProjection : IEventHandler<AccountCreated>, IEventHandler<DepositRecorded>, IEventHandler<WitdrawalRecorded>
     {
         private IProjectionStore<Guid, AccountsOverview> _projectionStore;
 
@@ -27,6 +27,20 @@ namespace Domain.Projections
                 Balance = 0
             });
             _projectionStore.Save(@event.CustomerId, projection);
+        }
+
+        public void Handle(WitdrawalRecorded @event)
+        {
+            var projection = _projectionStore.GetProjection(@event.FromCustomerId);
+            projection.Accounts.Single(a => a.AccountId == @event.Transfer.FromAccountId.ToString()).Balance -= @event.Transfer.Amount;
+            _projectionStore.Save(@event.FromCustomerId, projection);
+        }
+
+        public void Handle(DepositRecorded @event)
+        {
+            var projection = _projectionStore.GetProjection(@event.ToCustomerId);
+            projection.Accounts.Single(a => a.AccountId == @event.Transfer.ToAccountId.ToString()).Balance += @event.Transfer.Amount;
+            _projectionStore.Save(@event.ToCustomerId, projection);
         }
     }
 }

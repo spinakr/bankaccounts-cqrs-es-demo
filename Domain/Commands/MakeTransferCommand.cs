@@ -35,8 +35,8 @@ namespace BankAccounts.Domain.Queries
             var toAccountStream = _eventStore.LoadEventStream(cmd.ToAccount.ToString());
             var toAccount = new Account(toAccountStream.Events);
 
-            fromAccount.WithdrawAmount(toAccount.Id, cmd.Amount);
-            toAccount.DepositAmount(fromAccount.Id, cmd.Amount);
+            fromAccount.WithdrawAmount(toAccount.CustomerId, toAccount.Id, cmd.Amount);
+            toAccount.DepositAmount(fromAccount.CustomerId, fromAccount.Id, cmd.Amount);
 
             _eventStore.AppendToStream(fromAccount.Id.ToString(), fromAccount.PendingEvents, fromAccountStream.Version);
             _eventStore.AppendToStream(toAccount.Id.ToString(), toAccount.PendingEvents, toAccountStream.Version);

@@ -25,15 +25,15 @@ namespace BankAccounts.Domain.Model
             return newAccount;
         }
 
-        public void DepositAmount(Guid fromAccount, double amount)
+        public void DepositAmount(Guid fromCustomerId, Guid fromAccount, double amount)
         {
-            var @event = new DepositRecorded(Id, fromAccount, amount, DateTime.Now);
+            var @event = new DepositRecorded(fromCustomerId, CustomerId, Id, fromAccount, amount, DateTime.Now);
             Append(@event);
         }
 
-        public void WithdrawAmount(Guid toAccount, double amount)
+        public void WithdrawAmount(Guid toCustomerId, Guid toAccount, double amount)
         {
-            var @event = new WitdrawalRecorded(toAccount, Id, amount, DateTime.Now);
+            var @event = new WitdrawalRecorded(CustomerId, toCustomerId, toAccount, Id, amount, DateTime.Now);
             Append(@event);
         }
 
