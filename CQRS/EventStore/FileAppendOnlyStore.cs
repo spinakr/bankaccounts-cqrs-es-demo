@@ -6,14 +6,17 @@ using BankAccounts.CQRS.EventStore;
 
 namespace CQRS.EventStore
 {
+    //NB:
+    //This is not suitable for anything other than demo purposes. 
+    //Using files as storage will cause loss of data
     public class FileAppendOnlyStore : IAppendOnlyStore
     {
         private Dictionary<string, StreamWriter> _fileStreams = new Dictionary<string, StreamWriter>();
         private string EventStoreContentPath;
 
-        public FileAppendOnlyStore()
+        public FileAppendOnlyStore(string storeName)
         {
-            EventStoreContentPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/bankaccounts-eventsore";
+            EventStoreContentPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/cqrs/{storeName}/eventstore";
             if (!Directory.Exists(EventStoreContentPath))
             {
                 Directory.CreateDirectory(EventStoreContentPath);

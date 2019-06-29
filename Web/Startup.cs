@@ -37,8 +37,8 @@ namespace bankaccounts
             services.AddHandlers(typeof(AccountsOverviewQueryHandler).Assembly);
             services.AddSingleton<IMessaging, Messaging>();
             services.AddSingleton<IEventStore, EventStore>();
-            services.AddSingleton<IAppendOnlyStore, FileAppendOnlyStore>();
-            services.AddSingleton<IProjectionStore<Guid, AccountsOverview>, InMemoryProjectionStore<Guid, AccountsOverview>>();
+            services.AddSingleton<IAppendOnlyStore>(new FileAppendOnlyStore("bankaccounts"));
+            services.AddSingleton<IProjectionStore<Guid, AccountsOverview>, FileProjectionStore<Guid, AccountsOverview>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
