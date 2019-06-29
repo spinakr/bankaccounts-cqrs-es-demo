@@ -2,6 +2,6 @@
 Simple application showcasing a CQRS + ES setup. 
 
 ###TODO
+- Create simple web to add and display data
 - Setup unit and integation test for business app and "infrastructure"
-- Add concurrency checks to event store. 
 - Add checks and exceptions to business logic
