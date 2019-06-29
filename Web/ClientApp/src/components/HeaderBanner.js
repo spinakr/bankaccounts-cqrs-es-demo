@@ -7,7 +7,7 @@ class HeaderBanner extends Component {
         <section className="hero is-info">
           <div className="hero-body">
             <div className="container">
-              <h1 className="title">Wineventory</h1>
+              <h1 className="title">Bank Accounts</h1>
             </div>
           </div>
         </section>

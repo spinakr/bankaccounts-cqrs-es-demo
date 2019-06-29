@@ -6,11 +6,8 @@ export default class NavMenu extends Component {
     return (
       <nav className="navbar is-fixed-bottom is-warning">
         <div className="container">
-          <Link to="Wines" className="navbar-item">
-            Wines
-          </Link>
-          <Link to="Search" className="navbar-item">
-            Search
+          <Link to="Accounts" className="navbar-item">
+            Accounts
           </Link>
         </div>
       </nav>
