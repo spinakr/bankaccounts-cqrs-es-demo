@@ -7,11 +7,11 @@ namespace BankAccounts.Domain.Queries
 {
     public class MakeTransferCommand : ICommand
     {
-        public Guid FromAccount { get; set; }
-        public Guid ToAccount { get; set; }
+        public string FromAccount { get; set; }
+        public string ToAccount { get; set; }
         public double Amount { get; set; }
 
-        public MakeTransferCommand(Guid fromAccount, Guid toAccount, double amount)
+        public MakeTransferCommand(string fromAccount, string toAccount, double amount)
         {
             FromAccount = fromAccount;
             ToAccount = toAccount;
@@ -30,16 +30,22 @@ namespace BankAccounts.Domain.Queries
 
         public Result Handle(MakeTransferCommand cmd)
         {
-            var fromAccountStream = _eventStore.LoadEventStream(cmd.FromAccount.ToString());
+            var fromAccountStream = _eventStore.LoadEventStream(cmd.FromAccount);
             var fromAccount = new Account(fromAccountStream.Events);
-            var toAccountStream = _eventStore.LoadEventStream(cmd.ToAccount.ToString());
+            var toAccountStream = _eventStore.LoadEventStream(cmd.ToAccount);
             var toAccount = new Account(toAccountStream.Events);
 
-            fromAccount.WithdrawAmount(toAccount.CustomerId, toAccount.Id, cmd.Amount);
-            toAccount.DepositAmount(fromAccount.CustomerId, fromAccount.Id, cmd.Amount);
+            if (fromAccount.CustomerId != Guid.Empty)
+            {
+                fromAccount.WithdrawAmount(toAccount.CustomerId, cmd.ToAccount, cmd.Amount);
+                _eventStore.AppendToStream(fromAccount.Id, fromAccount.PendingEvents, fromAccountStream.Version);
+            }
 
-            _eventStore.AppendToStream(fromAccount.Id.ToString(), fromAccount.PendingEvents, fromAccountStream.Version);
-            _eventStore.AppendToStream(toAccount.Id.ToString(), toAccount.PendingEvents, toAccountStream.Version);
+            if (toAccount.CustomerId != Guid.Empty)
+            {
+                toAccount.DepositAmount(fromAccount.CustomerId, cmd.FromAccount, cmd.Amount);
+                _eventStore.AppendToStream(toAccount.Id, toAccount.PendingEvents, toAccountStream.Version);
+            }
 
             return Result.Complete();
         }

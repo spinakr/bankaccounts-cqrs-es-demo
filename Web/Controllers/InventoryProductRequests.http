@@ -19,7 +19,7 @@ POST https://localhost:5001/api/customers/9820fca7-e9dc-414a-90a5-68692327d3db/a
 content-type: application/json
 
 {
-  "ToAccountId": "75af5854-c3f9-4238-9cd3-85493224e5e6",
-  "FromAccountId": "e9dee35c-20fd-4598-86c8-7f8a5fd0d930",
+  "FromAccountId": "75af5854-c3f9-4238-9cd3-85493224e5e6",
+  "ToAccountId": "outside",
   "Amount": "200",
 }

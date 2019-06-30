@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using BankAccounts.CQRS.EventStore;
 using CQRS;
 
 namespace BankAccounts.CQRS
 {
     public abstract class EventSourcedAggregate
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public List<IEvent> PendingEvents { get; private set; }
 

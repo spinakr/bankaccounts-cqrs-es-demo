@@ -5,9 +5,9 @@ const AccountList = ({ accounts }) => {
     <table className="table">
       <thead>
         <tr>
-          {/* <th>
+          <th>
             <abbr title="Account Id">Id</abbr>
-          </th> */}
+          </th>
           <th>
             <abbr title="Account Name">Name</abbr>
           </th>
@@ -18,6 +18,7 @@ const AccountList = ({ accounts }) => {
         {accounts.map(account => {
           return (
             <tr key={account.accountId}>
+              <td>{account.accountId}</td>
               <td>{account.accountName}</td>
               <td>{account.balance}</td>
             </tr>

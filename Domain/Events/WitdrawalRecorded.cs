@@ -8,11 +8,11 @@ namespace BankAccounts.Domain.Events
 {
     public class WitdrawalRecorded : IEvent
     {
-        public WitdrawalRecorded(Guid fromCustomerId, Guid toCustomerId, Guid toAccount, Guid fromAccount, double amount, DateTime date)
+        public WitdrawalRecorded(Guid fromCustomerId, Guid toCustomerId, string toAccount, string fromAccount, double amount, DateTime date)
         {
             FromCustomerId = fromCustomerId;
             ToCustomerId = toCustomerId;
-            Transfer = new Transfer(fromAccount, toAccount, amount, date);
+            Transfer = new Transfer(toAccount, fromAccount, amount, date);
         }
 
         public Guid FromCustomerId { get; set; }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BankAccounts.Domain.Events;
 using BankAccounts.CQRS;
-using BankAccounts.CQRS.EventStore;
 using CQRS;
 
 namespace BankAccounts.Domain.Model
@@ -19,19 +18,19 @@ namespace BankAccounts.Domain.Model
 
         public static Account CreateNew(string name, Guid customerId)
         {
-            var @event = new AccountCreated(Guid.NewGuid(), name, customerId);
+            var @event = new AccountCreated(Guid.NewGuid().ToString(), name, customerId);
             var newAccount = new Account();
             newAccount.Append(@event);
             return newAccount;
         }
 
-        public void DepositAmount(Guid fromCustomerId, Guid fromAccount, double amount)
+        public void DepositAmount(Guid fromCustomerId, string fromAccount, double amount)
         {
             var @event = new DepositRecorded(fromCustomerId, CustomerId, Id, fromAccount, amount, DateTime.Now);
             Append(@event);
         }
 
-        public void WithdrawAmount(Guid toCustomerId, Guid toAccount, double amount)
+        public void WithdrawAmount(Guid toCustomerId, string toAccount, double amount)
         {
             var @event = new WitdrawalRecorded(CustomerId, toCustomerId, toAccount, Id, amount, DateTime.Now);
             Append(@event);

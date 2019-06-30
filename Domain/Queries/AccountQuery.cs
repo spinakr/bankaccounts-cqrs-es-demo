@@ -9,9 +9,9 @@ namespace BankAccounts.Domain.Queries
 
     public class AccountQuery : IQuery<AccountOverview>
     {
-        public Guid AccountId { get; set; }
+        public string AccountId { get; set; }
 
-        public AccountQuery(Guid accountId)
+        public AccountQuery(string accountId)
         {
             AccountId = accountId;
         }
@@ -28,14 +28,14 @@ namespace BankAccounts.Domain.Queries
 
         public AccountOverview Handle(AccountQuery query)
         {
-            var eventStream = _eventStore.LoadEventStream(query.AccountId.ToString());
+            var eventStream = _eventStore.LoadEventStream(query.AccountId);
             var account = new Account(eventStream.Events);
 
             return new AccountOverview
             {
                 AccountName = account.Name,
                 Balance = account.Balance,
-                AccountId = account.Id.ToString()
+                AccountId = account.Id
             };
         }
     }

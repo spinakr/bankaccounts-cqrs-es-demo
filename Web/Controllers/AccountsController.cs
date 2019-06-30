@@ -18,7 +18,7 @@ namespace BankAccounts.Controllers
         }
 
         [HttpGet("{customerId}/accounts/{accountId}")]
-        public AccountOverview AccountOverview(Guid customerId, Guid accountId)
+        public AccountOverview AccountOverview(Guid customerId, string accountId)
         {
             return _messaging.Dispatch(new AccountQuery(accountId));
         }
@@ -41,7 +41,7 @@ namespace BankAccounts.Controllers
         [HttpPost("{customerId}/accounts/transfer")]
         public IActionResult TransferTo(Guid customerId, [FromBody]dynamic req)
         {
-            var result = _messaging.Dispatch(new MakeTransferCommand((Guid)req.FromAccountId, (Guid)req.ToAccountId, (double)req.Amount));
+            var result = _messaging.Dispatch(new MakeTransferCommand((string)req.FromAccountId, (string)req.ToAccountId, (double)req.Amount));
 
             return Ok();
         }
